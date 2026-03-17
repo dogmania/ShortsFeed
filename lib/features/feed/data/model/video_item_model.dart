@@ -1,17 +1,27 @@
 import '../../domain/entity/video_item.dart';
 
-class VideoItemModel extends VideoItem {
+class VideoItemModel {
   const VideoItemModel({
-    required super.id,
-    required super.videoUrl,
-    required super.thumbnailUrl,
-    required super.username,
-    required super.description,
-    required super.likeCount,
-    required super.commentCount,
-    required super.shareCount,
-    required super.isLiked,
+    required this.id,
+    required this.videoUrl,
+    required this.thumbnailUrl,
+    required this.username,
+    required this.description,
+    required this.likeCount,
+    required this.commentCount,
+    required this.shareCount,
+    required this.isLiked,
   });
+
+  final String id;
+  final String videoUrl;
+  final String thumbnailUrl;
+  final String username;
+  final String description;
+  final int likeCount;
+  final int commentCount;
+  final int shareCount;
+  final bool isLiked;
 
   factory VideoItemModel.fromJson(Map<String, dynamic> json) {
     return VideoItemModel(
@@ -41,17 +51,15 @@ class VideoItemModel extends VideoItem {
     };
   }
 
-  factory VideoItemModel.fromEntity(VideoItem entity) {
-    return VideoItemModel(
-      id: entity.id,
-      videoUrl: entity.videoUrl,
-      thumbnailUrl: entity.thumbnailUrl,
-      username: entity.username,
-      description: entity.description,
-      likeCount: entity.likeCount,
-      commentCount: entity.commentCount,
-      shareCount: entity.shareCount,
-      isLiked: entity.isLiked,
-    );
-  }
+  VideoItem toEntity() => VideoItem(
+    id: id,
+    videoUrl: videoUrl,
+    thumbnailUrl: thumbnailUrl,
+    username: username,
+    description: description,
+    likeCount: likeCount,
+    commentCount: commentCount,
+    shareCount: shareCount,
+    isLiked: isLiked,
+  );
 }

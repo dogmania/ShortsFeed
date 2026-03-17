@@ -10,6 +10,6 @@ class FeedRepositoryImpl implements FeedRepository {
   @override
   Future<List<VideoItem>> getFeedVideos() async {
     final models = await _dataSource.fetchVideos();
-    return models;
+    return models.map((model) => model.toEntity()).toList();
   }
 }
