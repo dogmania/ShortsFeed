@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/constants/app_spacing.dart';
 import '../../domain/entity/video_item.dart';
-import '../provider/feed_repository_provider.dart';
+import '../../di/feed_di.dart';
 
 class FeedBootstrapScreen extends ConsumerStatefulWidget {
   const FeedBootstrapScreen({super.key});
