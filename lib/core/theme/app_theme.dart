@@ -5,7 +5,7 @@ import 'app_text_styles.dart';
 
 abstract final class AppTheme {
   static ThemeData light() {
-    const colorScheme = ColorScheme.dark(
+    const colorScheme = ColorScheme.light(
       primary: AppColors.primary,
       onPrimary: Colors.white,
       onSurface: AppColors.textPrimary,
