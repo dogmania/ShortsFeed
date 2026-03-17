@@ -13,7 +13,6 @@ abstract final class AppTheme {
 
     return ThemeData(
       useMaterial3: false,
-      brightness: Brightness.dark,
       scaffoldBackgroundColor: AppColors.background,
       colorScheme: colorScheme,
       textTheme: const TextTheme(
