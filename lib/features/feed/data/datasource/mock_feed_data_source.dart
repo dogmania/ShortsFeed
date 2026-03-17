@@ -1,6 +1,8 @@
 import '../model/video_item_model.dart';
+import 'feed_data_source.dart';
 
-class MockVideoDataSource {
+class MockFeedDataSource implements FeedDataSource  {
+  @override
   Future<List<VideoItemModel>> fetchVideos() async {
     await Future<void>.delayed(const Duration(milliseconds: 400));
 
