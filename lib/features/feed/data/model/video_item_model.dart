@@ -30,9 +30,9 @@ class VideoItemModel {
       thumbnailUrl: json['thumbnailUrl'] as String,
       username: json['username'] as String,
       description: json['description'] as String,
-      likeCount: json['likeCount'] as int,
-      commentCount: json['commentCount'] as int,
-      shareCount: json['shareCount'] as int,
+      likeCount: (json['likeCount'] as num).toInt(),
+      commentCount: (json['commentCount'] as num).toInt(),
+      shareCount: (json['shareCount'] as num).toInt(),
       isLiked: json['isLiked'] as bool,
     );
   }
