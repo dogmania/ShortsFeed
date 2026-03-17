@@ -1,7 +1,7 @@
+import 'package:dart/features/feed/presentation/screen/feed_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../core/theme/app_theme.dart';
-import '../features/feed/presentation/screen/feed_bootstrap_screen.dart';
 
 class ShortsApp extends StatelessWidget {
   const ShortsApp({super.key});
@@ -12,7 +12,7 @@ class ShortsApp extends StatelessWidget {
       title: 'Shorts Feed',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
-      home: const FeedBootstrapScreen(),
+      home: const FeedScreen(),
     );
   }
 }
