@@ -1,0 +1,174 @@
+language: "ko-KR"
+early_access: false
+
+reviews:
+  profile: "chill"
+  high_level_summary: true
+  review_status: true
+  review_details: true
+  request_changes_workflow: false
+  poem: false
+  collapse_walkthrough: true
+
+  auto_review:
+    enabled: true
+    drafts: false
+
+  path_instructions:
+    - path: "lib/main.dart"
+      instructions: |
+        이 파일은 앱의 진입점입니다.
+        아래 항목을 우선적으로 확인해 주세요.
+
+        - 불필요한 초기화 코드가 없는지
+        - app 진입 흐름이 단순하고 명확한지
+        - ProviderScope 등 전역 설정이 과하지 않은지
+        - 불필요한 부트스트랩 로직이 포함되어 있지 않은지
+
+        단순한 스타일 지적보다는 진입 구조의 명확성과 유지보수성을 중심으로 리뷰해 주세요.
+
+    - path: "lib/app/**"
+      instructions: |
+        이 경로는 앱 레벨 설정을 담당합니다.
+        현재 프로젝트는 단일 핵심 화면 중심의 Flutter 숏폼 피드 프로젝트입니다.
+
+        아래 항목을 중점적으로 확인해 주세요.
+
+        - app.dart, router.dart, provider_observer.dart의 책임 분리가 명확한지
+        - Navigator 기반 라우팅이 프로젝트 범위에 맞게 단순하게 유지되고 있는지
+        - Riverpod 전역 설정이 디버깅에는 도움이 되면서도 과하지 않은지
+        - 앱 전역 theme, observer, router 구성이 테스트 및 확장에 무리가 없는지
+
+        단일 화면 중심 프로젝트이므로, 확장성만을 위한 과도한 추상화 여부도 함께 확인해 주세요.
+
+    - path: "lib/core/**"
+      instructions: |
+        이 경로는 공통 상수, 테마, 유틸, 공용 위젯을 담당합니다.
+
+        아래 항목을 중심으로 리뷰해 주세요.
+
+        - 실제로 공통 재사용되는 코드만 core에 위치하는지
+        - feature에 종속적인 로직이 core로 새어 나오지 않았는지
+        - theme, constants, utils, widget 구분이 명확한지
+        - 공용 위젯이 오히려 복잡도를 높이지 않는지
+        - 프로젝트 범위를 넘는 불필요한 공용화가 없는지
+
+        재사용성이 낮은 코드는 무리하게 공용화하기보다 feature 내부에 두는 방향을 선호합니다.
+
+    - path: "lib/features/feed/data/**"
+      instructions: |
+        이 경로는 feed 기능의 data 계층입니다.
+        mock data와 public video url을 기반으로 데이터를 제공합니다.
+
+        아래 항목을 중점적으로 확인해 주세요.
+
+        - datasource, model, repository 구현이 각자 책임에 맞게 분리되어 있는지
+        - mock_video_datasource가 목적에 맞게 단순하고 예측 가능하게 구현되어 있는지
+        - model과 domain entity의 역할이 뒤섞이지 않았는지
+        - repository 구현이 presentation 세부사항에 의존하지 않는지
+        - load more, like 토글 등 기능이 data 계층에서 과도하게 복잡해지지 않았는지
+        - mock 기반 구조라도 향후 실제 API로 교체하기 쉬운 형태인지
+
+        mock 데이터 기반 프로젝트라는 점을 고려하여, 과도한 네트워크 추상화나 불필요한 에러 계층 추가 여부도 함께 봐 주세요.
+
+    - path: "lib/features/feed/domain/**"
+      instructions: |
+        이 경로는 feed 기능의 domain 계층입니다.
+
+        아래 항목을 우선적으로 확인해 주세요.
+
+        - entity, repository interface, usecase의 경계가 분명한지
+        - usecase가 단순 위임 수준에 머무르지 않고 최소한의 의미 있는 역할을 갖는지
+        - get_feed_videos, load_more_videos, toggle_like가 프로젝트 요구사항에 맞는 단위로 정의되어 있는지
+        - domain 계층이 Flutter, Riverpod, video_player 같은 프레임워크 세부사항에 의존하지 않는지
+        - 프로젝트 규모 대비 domain이 과설계되어 있지 않은지
+
+        이 프로젝트에서는 형식적인 분리 자체보다 실제 유지보수성과 설명 가능성을 더 중요하게 보고 있습니다.
+
+    - path: "lib/features/feed/presentation/provider/**"
+      instructions: |
+        이 경로는 Riverpod 기반 상태 관리를 담당합니다.
+        현재 프로젝트에서 가장 중요한 리뷰 포인트 중 하나입니다.
+
+        아래 항목을 중점적으로 확인해 주세요.
+
+        - AsyncValue를 로딩, 성공, 실패 상태에 맞게 자연스럽게 사용하고 있는지
+        - provider 간 책임이 명확한지
+        - current_page_provider, like_provider, feed_provider가 서로 과도하게 결합되지 않았는지
+        - 페이지 변경 시 현재 재생 중인 비디오 상태가 안정적으로 반영되는지
+        - 불필요한 전역 상태 또는 상태 중복이 없는지
+        - 비동기 처리 중 race condition 가능성이 없는지
+        - load more 시 중복 요청, 중복 데이터 추가, 잘못된 페이지 상태 갱신 가능성이 없는지
+        - UI rebuild 범위가 필요 이상으로 커지지 않는지
+        - provider가 controller 생명주기 관리까지 과하게 떠안고 있지 않은지
+
+        상태 흐름의 안정성, 예측 가능성, rebuild 최소화를 중심으로 리뷰해 주세요.
+
+    - path: "lib/features/feed/presentation/screen/**"
+      instructions: |
+        이 경로는 화면 단위 UI를 담당합니다.
+
+        아래 항목을 중점적으로 확인해 주세요.
+
+        - feed_screen이 화면 조립 역할에 집중하고 있는지
+        - provider watch 범위가 과도하게 넓지 않은지
+        - 화면 단에서 비즈니스 로직이 과하게 들어가 있지 않은지
+        - 단일 화면 프로젝트 특성상 가독성이 좋은 구조인지
+        - 로딩, 에러, 빈 상태 처리가 사용자 입장에서 명확한지
+
+        screen은 조립과 상태 연결에 집중하고, 세부 UI와 재사용 가능한 구성은 widget으로 분리하는 방향을 선호합니다.
+
+    - path: "lib/features/feed/presentation/widget/**"
+      instructions: |
+        이 경로는 피드 화면을 구성하는 UI 위젯을 담당합니다.
+        video_player_item, video_feed_page, video_overlay, buffering_indicator, like_animation_layer는 핵심 위젯입니다.
+
+        아래 항목을 중심으로 리뷰해 주세요.
+
+        - 각 위젯의 책임이 명확한지
+        - 위젯 분리가 과하지 않고 실제로 가독성과 재사용성에 도움이 되는지
+        - video_player 관련 controller 초기화, 재생, 일시정지, dispose 흐름이 안전한지
+        - 화면에 보이는 현재 페이지의 비디오만 재생되고 나머지는 pause 되는지
+        - 페이지 스와이프 시 autoplay/pause 타이밍이 꼬이지 않는지
+        - setState, Consumer, Hook, provider watch 범위가 불필요하게 커서 성능 문제를 만들지 않는지
+        - overlay와 like animation이 player 로직과 과하게 결합되지 않았는지
+        - buffering/loading 상태가 UX 측면에서 자연스럽게 보이는지
+        - 애니메이션이나 과도한 효과보다 안정적인 영상 재생이 우선되고 있는지
+
+        이 프로젝트는 숏폼 영상 피드이므로, 영상 재생 안정성, 페이지 전환 시점 제어, controller 생명주기, 적절한 preload 관점에서 우선적으로 확인해 주세요.
+
+    - path: "android/**"
+      instructions: |
+        이 경로는 Android 플랫폼 설정을 담당합니다.
+
+        아래와 같이 실제 실행이나 빌드에 영향을 줄 수 있는 항목 위주로 리뷰해 주세요.
+
+        - 빌드 실패 가능성이 있는 설정
+        - video playback 관련 권한 또는 설정 문제
+        - manifest, gradle, minSdk/targetSdk 관련 실제 문제
+        - 성능이나 실행 안정성에 영향을 주는 설정
+
+        생성 코드나 일반적인 보일러플레이트에 대해서는 꼭 필요한 경우에만 언급해 주세요.
+
+    - path: "ios/**"
+      instructions: |
+        이 경로는 iOS 플랫폼 설정을 담당합니다.
+
+        아래와 같이 실제 실행에 영향을 줄 수 있는 항목 위주로 리뷰해 주세요.
+
+        - CocoaPods, Info.plist, deployment target, playback 설정 등 실제 실행에 영향을 주는 문제
+        - iOS에서 video_player 동작과 관련된 설정 누락
+        - 빌드 또는 실행 안정성에 직접적인 영향을 주는 문제
+
+        생성 코드나 보일러플레이트에 대해서는 꼭 필요한 경우에만 언급해 주세요.
+
+  path_filters:
+    - "!**/*.g.dart"
+    - "!**/*.freezed.dart"
+    - "!**/*.gen.dart"
+    - "!**/generated_plugin_registrant.*"
+    - "!build/**"
+    - "!.dart_tool/**"
+
+chat:
+  auto_reply: true
