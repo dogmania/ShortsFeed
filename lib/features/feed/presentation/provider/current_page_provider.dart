@@ -1,3 +1,18 @@
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final currentPageProvider = StateProvider<int>((ref) => 0);
+final currentPageProvider =
+NotifierProvider<CurrentPageNotifier, int>(CurrentPageNotifier.new);
+
+class CurrentPageNotifier extends Notifier<int> {
+  @override
+  int build() => 0;
+
+  void setPage(int index) {
+    if (state == index) return;
+    state = index;
+  }
+
+  void reset() {
+    state = 0;
+  }
+}

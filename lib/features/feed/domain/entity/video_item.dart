@@ -1,8 +1,7 @@
 class VideoItem {
   const VideoItem({
     required this.id,
-    required this.videoUrl,
-    required this.thumbnailUrl,
+    required this.path,
     required this.username,
     required this.description,
     required this.likeCount,
@@ -12,8 +11,7 @@ class VideoItem {
   });
 
   final String id;
-  final String videoUrl;
-  final String thumbnailUrl;
+  final String path;
   final String username;
   final String description;
   final int likeCount;
@@ -23,7 +21,7 @@ class VideoItem {
 
   VideoItem copyWith({
     String? id,
-    String? videoUrl,
+    String? path,
     String? thumbnailUrl,
     String? username,
     String? description,
@@ -34,8 +32,7 @@ class VideoItem {
   }) {
     return VideoItem(
       id: id ?? this.id,
-      videoUrl: videoUrl ?? this.videoUrl,
-      thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
+      path: path ?? this.path,
       username: username ?? this.username,
       description: description ?? this.description,
       likeCount: likeCount ?? this.likeCount,

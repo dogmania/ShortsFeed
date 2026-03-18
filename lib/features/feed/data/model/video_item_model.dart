@@ -3,8 +3,7 @@ import '../../domain/entity/video_item.dart';
 class VideoItemModel {
   const VideoItemModel({
     required this.id,
-    required this.videoUrl,
-    required this.thumbnailUrl,
+    required this.path,
     required this.username,
     required this.description,
     required this.likeCount,
@@ -14,8 +13,7 @@ class VideoItemModel {
   });
 
   final String id;
-  final String videoUrl;
-  final String thumbnailUrl;
+  final String path;
   final String username;
   final String description;
   final int likeCount;
@@ -26,8 +24,7 @@ class VideoItemModel {
   factory VideoItemModel.fromJson(Map<String, dynamic> json) {
     return VideoItemModel(
       id: json['id'] as String,
-      videoUrl: json['videoUrl'] as String,
-      thumbnailUrl: json['thumbnailUrl'] as String,
+      path: json['path'] as String,
       username: json['username'] as String,
       description: json['description'] as String,
       likeCount: (json['likeCount'] as num).toInt(),
@@ -40,8 +37,7 @@ class VideoItemModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'videoUrl': videoUrl,
-      'thumbnailUrl': thumbnailUrl,
+      'path': path,
       'username': username,
       'description': description,
       'likeCount': likeCount,
@@ -53,8 +49,7 @@ class VideoItemModel {
 
   VideoItem toEntity() => VideoItem(
     id: id,
-    videoUrl: videoUrl,
-    thumbnailUrl: thumbnailUrl,
+    path: path,
     username: username,
     description: description,
     likeCount: likeCount,
