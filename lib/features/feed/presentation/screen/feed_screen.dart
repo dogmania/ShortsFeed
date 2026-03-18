@@ -32,7 +32,7 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
     required int index,
     required int itemCount,
   }) {
-    ref.read(currentPageProvider.notifier).state = index;
+    ref.read(currentPageProvider.notifier).setPage(index);
 
     final shouldTriggerPagination = index >= itemCount - 2;
 
