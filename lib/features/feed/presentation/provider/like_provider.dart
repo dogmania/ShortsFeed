@@ -54,6 +54,6 @@ class LikeNotifier extends Notifier<LikeState> {
 }
 
 final likeProvider =
-NotifierProvider.family<LikeNotifier, LikeState, VideoItem>(
+NotifierProvider.autoDispose.family<LikeNotifier, LikeState, VideoItem>(
   LikeNotifier.new,
 );
