@@ -2,6 +2,8 @@ import 'package:dart/features/feed/domain/entity/video_item.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_spacing.dart';
+import 'overlay_actions.dart';
+import 'overlay_info.dart';
 import 'video_player_item.dart';
 
 class FeedPage extends StatelessWidget {
@@ -25,12 +27,12 @@ class FeedPage extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
+        Container(
+          color: Colors.black,
+        ),
         VideoPlayerItem(
           path: item.path,
           isActive: isCurrentPage,
-        ),
-        Container(
-          color: Colors.black.withValues(alpha: 0.18),
         ),
         SafeArea(
           child: Padding(
@@ -67,25 +69,23 @@ class FeedPage extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                Text(
-                  '@${item.username}',
-                  style: textTheme.headlineSmall?.copyWith(
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  item.description,
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.lg),
-                Text(
-                  'index: $index / current: $currentIndex',
-                  style: textTheme.bodySmall?.copyWith(
-                    color: Colors.white70,
-                  ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: OverlayInfo(
+                        username: item.username,
+                        description: item.description,
+                        index: index,
+                        currentIndex: currentIndex,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.lg),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 144),
+                      child: OverlayActions(item: item),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: AppSpacing.xl),
               ],
