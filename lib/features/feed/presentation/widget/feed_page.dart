@@ -1,12 +1,14 @@
 import 'package:dart/features/feed/domain/entity/video_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/constants/app_spacing.dart';
+import '../provider/like_provider.dart';
 import 'overlay_actions.dart';
 import 'overlay_info.dart';
 import 'video_player_item.dart';
 
-class FeedPage extends StatelessWidget {
+class FeedPage extends ConsumerWidget {
   const FeedPage({
     super.key,
     required this.item,
@@ -21,18 +23,23 @@ class FeedPage extends StatelessWidget {
   bool get isCurrentPage => index == currentIndex;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
+    final likeState = ref.watch(likeProvider(item));
 
     return Stack(
       fit: StackFit.expand,
       children: [
-        Container(
+        const ColoredBox(
           color: Colors.black,
         ),
         VideoPlayerItem(
           path: item.path,
           isActive: isCurrentPage,
+          isLiked: likeState.isLiked,
+          onDoubleTapLike: () {
+            ref.read(likeProvider(item).notifier).toggleLike();
+          },
         ),
         SafeArea(
           child: Padding(
