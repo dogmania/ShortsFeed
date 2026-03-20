@@ -72,53 +72,25 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
             );
           }
 
-          return Stack(
-            children: [
-              PageView.builder(
-                controller: _pageController,
-                scrollDirection: Axis.vertical,
+          return PageView.builder(
+            controller: _pageController,
+            scrollDirection: Axis.vertical,
+            itemCount: videos.length,
+            onPageChanged: (index) {
+              _handlePageChanged(
+                index: index,
                 itemCount: videos.length,
-                onPageChanged: (index) {
-                  _handlePageChanged(
-                    index: index,
-                    itemCount: videos.length,
-                  );
-                },
-                itemBuilder: (context, index) {
-                  final item = videos[index];
+              );
+            },
+            itemBuilder: (context, index) {
+              final item = videos[index];
 
-                  return FeedPage(
-                    item: item,
-                    index: index,
-                    currentIndex: currentPage,
-                  );
-                },
-              ),
-              SafeArea(
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.3),
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 14,
-                          vertical: 8,
-                        ),
-                        child: Text(
-                          'current page: $currentPage',
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+              return FeedPage(
+                item: item,
+                index: index,
+                currentIndex: currentPage,
+              );
+            },
           );
         },
       ),

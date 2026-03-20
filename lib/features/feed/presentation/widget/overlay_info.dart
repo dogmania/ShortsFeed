@@ -36,13 +36,6 @@ class OverlayInfo extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        const SizedBox(height: AppSpacing.lg),
-        Text(
-          'index: $index / current: $currentIndex',
-          style: textTheme.bodySmall?.copyWith(
-            color: Colors.white70,
-          ),
-        ),
       ],
     );
   }
