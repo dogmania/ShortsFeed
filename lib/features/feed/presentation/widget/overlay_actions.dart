@@ -16,18 +16,21 @@ class OverlayActions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final likeState = ref.watch(likeProvider(item));
+    final isLiking = ref.watch(
+      likeProvider.select((pendingIds) => pendingIds.contains(item.id)),
+    );
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         OverlayActionButton(
-          iconAssetPath: likeState.isLiked
+          iconAssetPath: item.isLiked
               ? 'assets/images/ic_like_checked.svg'
               : 'assets/images/ic_like_unchecked.svg',
-          label: _formatCount(likeState.likeCount),
+          label: _formatCount(item.likeCount),
           onTap: () {
-            ref.read(likeProvider(item).notifier).toggleLike();
+            if (isLiking) return;
+            ref.read(likeProvider.notifier).toggleLike(item.id);
           },
         ),
         const SizedBox(height: AppSpacing.lg),

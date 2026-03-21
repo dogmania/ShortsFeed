@@ -24,8 +24,6 @@ class FeedPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final likeState = ref.watch(likeProvider(item));
-
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -35,9 +33,9 @@ class FeedPage extends ConsumerWidget {
         VideoPlayerItem(
           path: item.path,
           isActive: isCurrentPage,
-          isLiked: likeState.isLiked,
+          isLiked: item.isLiked,
           onDoubleTapLike: () {
-            ref.read(likeProvider(item).notifier).toggleLike();
+            ref.read(likeProvider.notifier).toggleLike(item.id);
           },
         ),
         SafeArea(
