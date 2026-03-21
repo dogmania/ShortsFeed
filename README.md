@@ -23,6 +23,7 @@ flutter pub get
 ```
 
 ## 2-3. 앱 실행
+iOS Simulator 또는 Android Emulator를 준비한 뒤 아래 명령어를 터미널에서 실행
 ```
 flutter run
 ```
