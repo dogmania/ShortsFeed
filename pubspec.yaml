@@ -39,6 +39,13 @@ dependencies:
   video_thumbnail: ^0.5.6
   path_provider: ^2.1.5
   flutter_svg: ^2.2.4
+  flutter_launcher_icons: ^0.14.4
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/icon/app_icon.png
+  remove_alpha_ios: true
 
 dev_dependencies:
   flutter_test:
